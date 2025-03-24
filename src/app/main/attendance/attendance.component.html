@@ -1,0 +1,77 @@
+<div class="attendance-container">
+  <div class="filters">
+    <input type="text" placeholder="Search by Name, Code, Date" [(ngModel)]="searchQuery" (input)="applyFilters()" />
+    <select [(ngModel)]="selectedMembership" (change)="applyFilters()">
+      <option value="">All Memberships</option>
+      <option value="SIDC">SIDC</option>
+      <option value="Non-SIDC">Non-SIDC</option>
+    </select>
+    <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="">All Status</option>
+      <option value="Checked-in">Checked-in</option>
+      <option value="No-show">No-show</option>
+    </select>
+  </div>
+  <div>
+    <button class="csv-btn" (click)="downloadReport('csv')">
+      📥 Download CSV
+    </button>
+    <button class="excel-btn" (click)="downloadReport('xlsx')">
+      📥 Download Excel
+    </button>
+    <button class="pdf-btn" (click)="downloadReport('pdf')">
+      📥 Download PDF
+    </button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Code Number</th>
+        <th>Check-in Time</th>
+        <th>Check-out Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let attendee of filteredAttendance">
+        <td>{{ attendee.name }}</td>
+        <td>{{ attendee.address }}</td>
+        <td>{{ attendee.phone }}</td>
+        <td>{{ attendee.email }}</td>
+        <td>{{ attendee.code }}</td>
+        <td>{{ attendee.checkInTime }}</td>
+        <td>{{ attendee.checkOutTime }}</td>
+
+        <td>
+          <button class="approve-btn" (click)="showQRCode(attendee)">
+            🔳 Show QR
+          </button>
+          <button class="checkin-btn" (click)="manualCheckIn(attendee)">
+            ✔️ Check-in
+          </button>
+          <button class="checkout-btn" (click)="manualCheckOut(attendee)">
+            🚪 Check-out
+          </button>
+          <button class="resend-btn" (click)="resendQRCode(attendee)">
+            📩 Resend QR
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Full-Screen QR Code Modal -->
+<div class="modal" *ngIf="selectedQRCode" (click)="closeQRCode()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeQRCode()">&times;</span>
+    <h2>QR Code for {{ selectedAttendee?.name }}</h2>
+
+    <img *ngIf="selectedQRCode" [src]="selectedQRCode" alt="QR Code" />
+  </div>
+</div>

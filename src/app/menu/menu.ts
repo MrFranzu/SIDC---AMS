@@ -1,14 +1,47 @@
 import { CoreMenu } from '@core/types'
 
 export const menu: CoreMenu[] = [
+  // {
+  //   id: 'members',
+  //   title: 'Members',
+  //   type: 'item',
+  //   icon: 'users',
+  //   url: 'members',
+  //   role: ['Basic']
+  // },
+
   {
-    id: 'members',
-    title: 'Members',
+    id: 'dashboard',
+    title: 'Dashboard',
     type: 'item',
-    icon: 'users',
-    url: 'members',
+    icon: 'home',
+    url: 'dashboards',
     role: ['Basic']
-  }
+  },
+  {
+    id: 'attendance',
+    title: 'Attendance',
+    type: 'item',
+    icon: 'check-square',
+    url: 'attendances',
+    role: ['Basic']
+  },
+  {
+    id: 'analytics',
+    title: 'Analytics',
+    type: 'item',
+    icon: 'bar-chart-2',
+    url: 'analyticss',
+    role: ['Basic']
+  },
+  {
+    id: 'eventcheck',
+    title: 'Check-in/out',
+    type: 'item',
+    icon: 'monitor',
+    url: 'eventcheck',
+    role: ['Basic']
+  },
   // {
   //   id: 'customers',
   //   title: 'Customers',

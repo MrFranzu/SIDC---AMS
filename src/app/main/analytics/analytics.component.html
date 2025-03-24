@@ -1,0 +1,101 @@
+<div class="filter-container">
+  <label for="month">Month:</label>
+  <select id="month">
+    <option value="01">January</option>
+    <option value="02">February</option>
+    <option value="03">March</option>
+    <option value="04">April</option>
+    <option value="05">May</option>
+    <option value="06">June</option>
+    <option value="07">July</option>
+    <option value="08">August</option>
+    <option value="09">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+  </select>
+
+  <label for="year">Year:</label>
+  <select id="year">
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+    <option value="2023">2023</option>
+    <option value="2022">2022</option>
+    <option value="2021">2021</option>
+  </select>
+</div>
+<div class="stat-container">
+  <div class="stat-card">
+    <h3><fa-icon [icon]="faHourglassHalf"></fa-icon>Stay Duration</h3>
+    <p>
+      <span>{{ averageStayDuration }}</span> mins
+    </p>
+  </div>
+
+  <div class="stat-card">
+    <h3><fa-icon [icon]="faUsers"></fa-icon> Total Registered</h3>
+    <p>
+      <span>{{ totalRegistered }}</span>
+    </p>
+  </div>
+
+  <div class="stat-card">
+    <h3><fa-icon [icon]="faCheckCircle"></fa-icon> Total Checked-in</h3>
+    <p>
+      <span>{{ totalCheckedIn }}</span>
+    </p>
+  </div>
+
+  <div class="stat-card">
+    <h3><fa-icon [icon]="faTimesCircle"></fa-icon> No-Show Count</h3>
+    <p>
+      <span>{{ noShowCount }}</span>
+    </p>
+  </div>
+
+  <div class="stat-card">
+    <h3><fa-icon [icon]="faChartBar"></fa-icon> Attendance Rate (%)</h3>
+    <p>
+      <span>{{ attendanceRate }}</span>%
+    </p>
+  </div>
+</div>
+
+<div class="charts">
+  <div class="chart">
+    <h3>📊 Check-in Trends (Heatmap)</h3>
+    <ngx-charts-heat-map [view]="[500, 270]" [scheme]="colorScheme" [results]="checkInTrends" [xAxis]="true"
+      [yAxis]="true" [legend]="true" [tooltipDisabled]="false" [animations]="true">
+    </ngx-charts-heat-map>
+  </div>
+
+  <div class="chart">
+    <h3>📉 Check-out Trends</h3>
+    <canvas baseChart [datasets]="checkOutTrends" [labels]="timeLabels" [chartType]="'line'"></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>⏰ Peak Check-in Time</h3>
+    <canvas baseChart [datasets]="peakCheckInTime" [labels]="timeLabels" [chartType]="'bar'"></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>📊 Registration vs. Attendance</h3>
+    <canvas baseChart [datasets]="registrationVsAttendance" [options]="scatterChartOptions" [chartType]="'scatter'">
+    </canvas>
+  </div>
+
+  <div class="chart">
+    <h3>📍 Attendance Breakdown</h3>
+    <canvas baseChart [datasets]="locationBreakdown" [labels]="locationLabels" [chartType]="'pie'"></canvas>
+  </div>
+
+  <div class="chart">
+    <h3>📊 Membership Distribution</h3>
+    <canvas baseChart [datasets]="membershipBreakdown" [labels]="['SIDC Members', 'Non-Members']"
+      [chartType]="'doughnut'" [options]="doughnutChartOptions">
+    </canvas>
+  </div>
+  <!-- Closing charts container -->
+</div>
+<!-- Closing analytics container -->

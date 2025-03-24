@@ -1,0 +1,77 @@
+<div class="dashboard">
+  <!-- Top Cards -->
+  <div class="top-cards">
+    <div class="card">
+      <h3><i class="fas fa-users"></i> Total Registered</h3>
+      <p><span>{{ totalRegistered }}</span></p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-user-check"></i> Total Checked-in</h3>
+      <p><span>{{ totalCheckedIn }}</span></p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-user-times"></i> No-Shows</h3>
+      <p><span>{{ noShows }}</span></p>
+    </div>
+    <div class="card">
+      <h3><i class="fas fa-chart-line"></i> Attendance Rate</h3>
+      <p><span>{{ attendanceRate }}%</span></p>
+    </div>
+  </div>
+
+  <!-- Live Counter -->
+  <div class="live-counter">
+    <h2>
+      <i class="fas fa-user-friends"></i> Currently at the Event: 
+      <span>{{ currentAttendees }}</span> attendees
+    </h2>
+
+    <div class="progress-bar">
+      <div class="progress" [style.width]="attendanceRate + '%'">
+        <i class="fas fa-check-circle"></i> {{ attendanceRate }}% Checked-in
+      </div>
+    </div>
+    <p>
+      <strong><i class="fas fa-hourglass-half"></i> {{ 100 - attendanceRate }}%</strong> Pending
+    </p>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts">
+    <canvas #lineChart></canvas>
+    <canvas #pieChart></canvas>
+    <canvas #barChart></canvas>
+  </div>
+
+  <!-- Attendance Log -->
+  <div class="attendance-log">
+    <h2><i class="fas fa-list-alt"></i> Real-Time Attendance Log</h2>
+    <table>
+      <thead>
+        <tr>
+          <th><i class="fas fa-user"></i> Name</th>
+          <th><i class="fas fa-clock"></i> Check-in Time</th>
+          <th><i class="fas fa-info-circle"></i> Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attendee of attendanceLog">
+          <td>{{ attendee.name }}</td>
+          <td>{{ attendee.time }}</td>
+          <td [ngClass]="{
+              'checked-in': attendee.status === 'Checked-in',
+              'no-show': attendee.status === 'No-show'
+            }">
+            <i class="fas" 
+              [ngClass]="{
+                'fa-check-circle text-success': attendee.status === 'Checked-in',
+                'fa-times-circle text-danger': attendee.status === 'No-show'
+              }">
+            </i>
+            {{ attendee.status }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

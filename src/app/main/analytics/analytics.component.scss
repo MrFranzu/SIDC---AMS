@@ -1,0 +1,105 @@
+$primary-color: #24695c;
+$secondary-color: #1e5a50;
+$background-color: linear-gradient(135deg, #1e5a50, #24695c);
+$text-color: #ffffff;
+$card-bg: rgba(230, 242, 240, 0.9);
+$shadow-color: rgba(0, 0, 0, 0.15);
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: $background-color;
+  color: $text-color;
+}
+
+.filter-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+
+  select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    background: #fff;
+    color: #333;
+    font-weight: bold;
+    transition: 0.3s ease;
+
+    &:hover {
+      background: $primary-color;
+      color: $text-color;
+    }
+  }
+}
+
+.stat-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  /* Space between cards */
+  justify-content: center;
+  /* Align items in the center */
+  align-items: center;
+  padding: 10px;
+  flex-direction: row;
+  /* Ensure it stays in a row */
+}
+
+.stat-card {
+  background: rgba(230, 242, 240, 0.9);
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 180px;
+  flex: 1;
+  max-width: 220px;
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  h3 {
+    font-size: 15px;
+    color: #24695c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  p {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 charts per row */
+  gap: 20px;
+  /* Adds spacing between charts */
+  padding: 20px;
+  justify-content: center;
+  align-items: start;
+}
+
+.chart {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.chart:hover {
+  transform: scale(1.02);
+}

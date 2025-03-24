@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreCommonModule } from '@core/common.module';
-import { MemberComponent } from './member/member.component';
+import { EventCheckComponent } from './event-check/event-check.component';
+
 
 const routes: Routes = [
   // {
@@ -23,13 +24,31 @@ const routes: Routes = [
   //   loadChildren: () => import('./accounts/accounts.module').then(m => m.AccountsModule)
   // },
   {
-    path: 'members',
-    loadChildren: () => import('./member/member.module').then(m => m.MembersModule)
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path: 'dashboards',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+  },
+  {
+    path: 'attendances',
+    loadChildren: () => import('./attendance/attendance.module').then(m => m.AttendanceModule),
+  },
+  {
+    path: 'analyticss',
+    loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule),
+  },
+  {
+    path: 'eventcheck',
+    loadChildren: () => import('./event-check/event-check.module').then(m => m.EventCheckModule),
   },
 ];
 
 @NgModule({
   declarations: [
+  
+
   ],
   imports: [
     RouterModule.forChild(routes),

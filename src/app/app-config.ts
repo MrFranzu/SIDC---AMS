@@ -16,9 +16,9 @@ import { CoreConfig } from '@core/types';
 // prettier-ignore
 export const coreConfig: CoreConfig = {
   app: {
-    appName     : 'GYM MNGMNT',                                        // App Name
-    appTitle    : 'SIDC Gym Management', // App Title
-    appLogoImage: 'assets/images/logo/dumbbell_logo.png',                  // App Logo
+    appName     : 'ATTD MGMT',                                        // App Name
+    appTitle    : 'Attendance Management System', // App Title
+    appLogoImage: 'assets/images/logo/atlogo.png',                  // App Logo
     appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
   },
   layout: {

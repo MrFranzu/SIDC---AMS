@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  redirectMember() {
+    throw new Error('Method not implemented.');
+  }
 
   //public
   public currentUser: Observable<User>;
