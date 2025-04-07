@@ -6,6 +6,7 @@ import {
   faTimesCircle,
   faChartBar,
 } from "@fortawesome/free-solid-svg-icons";
+import { ChartConfiguration, ChartOptions } from "chart.js";
 
 @Component({
   selector: "app-analytics",
@@ -23,9 +24,17 @@ export class AnalyticsComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faTimesCircle = faTimesCircle;
   faChartBar = faChartBar;
+  locationLabels: string[] = [
+    "Location A",
+    "Location B",
+    "Location C",
+    "Location D",
+    "Location E",
+  ];
+  radarChartLabels: string[] = [];
 
   registrationVsAttendance: {
-    data: { x: number; y: number }[]; // ✅ Change type to accept objects
+    data: { x: number; y: number }[];
     label: string;
     backgroundColor: string[];
     borderColor: string;
@@ -73,7 +82,7 @@ export class AnalyticsComponent implements OnInit {
   }[] = [];
 
   timeLabels: string[] = ["8 AM", "9 AM", "10 AM", "11 AM", "12 PM", "1 PM"];
-  locationLabels: string[] = ["Location A", "Location B"];
+  timeLabels2: string[] = ["3 PM", "4 PM", "5 PM", "6 PM", "7 PM"];
 
   // Donut Chart Data for Membership Distribution
   membershipBreakdown = [
@@ -88,7 +97,7 @@ export class AnalyticsComponent implements OnInit {
   // Donut Chart Options
   doughnutChartOptions = {
     responsive: true,
-    cutout: "50%", // Creates the "donut" effect
+    cutout: "50%",
     plugins: {
       legend: { position: "bottom" },
       tooltip: { enabled: true },
@@ -100,6 +109,49 @@ export class AnalyticsComponent implements OnInit {
       x: { title: { display: boolean; text: string } };
       y: { title: { display: boolean; text: string } };
     };
+  };
+  radarChartOptions: ChartOptions = {
+    responsive: true,
+    scale: {
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        max: 100,
+        stepSize: 10,
+      },
+    },
+    legend: {
+      position: "top",
+    },
+    tooltips: {
+      enabled: true,
+    },
+  };
+
+  radarChartData: ChartConfiguration["data"] = {
+    labels: this.locationLabels,
+    datasets: [
+      {
+        label: "Attendance Rate by Location",
+        data: [75, 85, 50, 90],
+        backgroundColor: "rgba(36, 105, 92, 0.4)",
+        borderColor: "#24695c",
+        pointBackgroundColor: "#24695c",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "#24695c",
+      },
+      {
+        label: "Average Stay Duration (minutes)",
+        data: [120, 135, 95, 110],
+        backgroundColor: "rgba(161, 10, 40, 0.4)",
+        borderColor: "#A10A28",
+        pointBackgroundColor: "#A10A28",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "#A10A28",
+      },
+    ],
   };
 
   constructor() {}
@@ -114,9 +166,9 @@ export class AnalyticsComponent implements OnInit {
     // Initialize other chart data
     this.peakCheckInTime = [
       {
-        data: [5, 10, 20, 50, 80, 100],
+        data: [75, 100, 60, 80, 20, 30, 10],
         label: "Peak Check-in",
-        backgroundColor: this.chartColors.backgroundColor[0], // ✅ Fixed
+        backgroundColor: this.chartColors.backgroundColor[0],
         borderColor: this.chartColors.borderColor,
         borderWidth: 2,
       },
@@ -184,7 +236,7 @@ export class AnalyticsComponent implements OnInit {
       {
         data: [5, 15, 25, 40, 70, 90],
         label: "Check-outs",
-        backgroundColor: this.chartColors.backgroundColor[0], // ✅ Fixed
+        backgroundColor: this.chartColors.backgroundColor[0],
         borderColor: this.chartColors.borderColor,
         pointBackgroundColor: this.chartColors.pointBackgroundColor,
         pointBorderColor: this.chartColors.pointBorderColor,
@@ -222,13 +274,83 @@ export class AnalyticsComponent implements OnInit {
         y: { title: { display: true, text: "Total Checked-in" } },
       },
     };
-
     this.locationBreakdown = [
       {
+        label: "Location Breakdown",
         data: [60, 40],
-        label: "Location",
-        backgroundColor: ["#24695c", "#1e5a50"],
+        backgroundColor: ["rgba(36, 105, 92, 0.4)", "rgba(30, 90, 80, 0.4)"],
       },
     ];
+
+    this.radarChartData.labels = this.locationLabels;
+    this.radarChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scale: {
+        angleLines: { color: "#ddd" },
+        ticks: {
+          beginAtZero: true,
+          min: 0, // Set minimum value
+          max: 150, // Set maximum value
+          stepSize: 25, // Step intervals
+          fontSize: 10, // Corrected font size for v2.x
+        },
+        pointLabels: {
+          fontSize: 10,
+          fontColor: "#333", // Corrected font color for v2.x
+        },
+      },
+      legend: {
+        position: "top",
+        labels: {
+          usePointStyle: true,
+          boxWidth: 12,
+          fontSize: 10,
+          padding: 10,
+        },
+      },
+      tooltips: {
+        enabled: true,
+      },
+    };
+
+    this.radarChartData = {
+      labels: this.locationLabels,
+      datasets: [
+        {
+          label: "Attendance Rate by Location",
+          data: [75, 85, 50, 60, 90],
+          backgroundColor: "rgba(36, 105, 92, 0.1)",
+          borderColor: "#24695c",
+          borderWidth: 2,
+          pointBackgroundColor: "#24695c",
+          pointBorderColor: "#fff",
+          pointRadius: 4,
+          fill: false,
+        },
+        {
+          label: "Average Stay Duration (minutes)",
+          data: [20, 120, 70, 110, 70],
+          backgroundColor: "rgba(161, 10, 40, 0.1)",
+          borderColor: "#A10A28",
+          borderWidth: 2,
+          pointBackgroundColor: "#A10A28",
+          pointBorderColor: "#fff",
+          pointRadius: 4,
+          fill: false,
+        },
+        {
+          label: "Engagement Score",
+          data: [110, 60, 120, 85, 130],
+          backgroundColor: "rgba(50, 115, 220, 0.1)",
+          borderColor: "#3273DC",
+          borderWidth: 2,
+          pointBackgroundColor: "#3273DC",
+          pointBorderColor: "#fff",
+          pointRadius: 4,
+          fill: false,
+        },
+      ],
+    };
   }
 }

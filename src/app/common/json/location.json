@@ -1,0 +1,66 @@
+[
+  {
+    "name": "SIDC Branch - Manila",
+    "lat": 14.5995,
+    "lng": 120.9842,
+    "region": "NCR",
+    "members": 5000,
+    "description": "Located in the heart of the capital, this branch serves as a central hub for urban members, providing modern solutions and support for a growing community of 5,000 members."
+  },
+  {
+    "name": "SIDC Branch - Cebu",
+    "lat": 10.3157,
+    "lng": 123.8854,
+    "region": "Region VII",
+    "members": 3000,
+    "description": "Positioned in the vibrant Queen City of the South, this branch plays a key role in connecting businesses and individuals, fostering strong regional growth with 3,000 active members."
+  },
+  {
+    "name": "SIDC Branch - Davao",
+    "lat": 7.1907,
+    "lng": 125.4553,
+    "region": "Region XI",
+    "members": 2000,
+    "description": "Nestled in one of Mindanao’s busiest economic centers, this branch supports agricultural and business communities, serving 2,000 members with essential services."
+  },
+  {
+    "name": "SIDC Branch - Batangas",
+    "lat": 13.7565,
+    "lng": 121.0583,
+    "region": "Region IV-A",
+    "members": 4000,
+    "description": "As a major branch in Southern Luzon, this location caters to the province’s thriving agricultural and trade industries, helping 4,000 members expand their ventures."
+  },
+  {
+    "name": "SIDC Branch - Laguna",
+    "lat": 14.1705,
+    "lng": 121.3129,
+    "region": "Region IV-A",
+    "members": 2500,
+    "description": "Strategically located in an industrial and agricultural hub, this branch assists 2,500 members with financial and business support tailored to local needs."
+  },
+  {
+    "name": "SIDC Branch - Quezon",
+    "lat": 13.9311,
+    "lng": 121.6178,
+    "region": "Region IV-A",
+    "members": 1800,
+    "description": "This branch is deeply connected to the province’s strong farming and trading industries, supporting 1,800 members with resources for growth and sustainability."
+  },
+  {
+    "name": "SIDC Branch - Cavite",
+    "lat": 14.4791,
+    "lng": 120.8966,
+    "region": "Region IV-A",
+    "members": 3500,
+    "description": "With its proximity to Metro Manila, this branch provides essential services to 3,500 members, focusing on both urban and rural business development."
+  },
+  {
+    "name": "SIDC Branch - Cagayan de Oro",
+    "lat": 8.4542,
+    "lng": 124.6319,
+    "region": "Region X",
+    "members": 2700,
+    "description": "Situated in a key gateway of Northern Mindanao, this branch aids 2,700 members with diverse opportunities in agriculture, trade, and commerce."
+  }
+]

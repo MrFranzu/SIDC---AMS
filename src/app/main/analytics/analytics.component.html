@@ -63,7 +63,7 @@
 
 <div class="charts">
   <div class="chart">
-    <h3>📊 Check-in Trends (Heatmap)</h3>
+    <h3>📊 Check-in Trends</h3>
     <ngx-charts-heat-map [view]="[500, 270]" [scheme]="colorScheme" [results]="checkInTrends" [xAxis]="true"
       [yAxis]="true" [legend]="true" [tooltipDisabled]="false" [animations]="true">
     </ngx-charts-heat-map>
@@ -71,7 +71,7 @@
 
   <div class="chart">
     <h3>📉 Check-out Trends</h3>
-    <canvas baseChart [datasets]="checkOutTrends" [labels]="timeLabels" [chartType]="'line'"></canvas>
+    <canvas baseChart [datasets]="checkOutTrends" [labels]="timeLabels2" [chartType]="'line'"></canvas>
   </div>
 
   <div class="chart">
@@ -86,8 +86,12 @@
   </div>
 
   <div class="chart">
-    <h3>📍 Attendance Breakdown</h3>
-    <canvas baseChart [datasets]="locationBreakdown" [labels]="locationLabels" [chartType]="'pie'"></canvas>
+    <h3>📊 Attendance Stats</h3>
+    <div style="display: block; width: 500px; height: 270px">
+      <canvas baseChart [datasets]="radarChartData.datasets" [labels]="radarChartData.labels"
+        [options]="radarChartOptions" chartType="radar">
+      </canvas>
+    </div>
   </div>
 
   <div class="chart">

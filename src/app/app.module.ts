@@ -28,7 +28,7 @@ import { AnalyticsComponent } from "./main/analytics/analytics.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { LoginComponent } from "./main/auth/login/login.component";
-
+import { MapComponent } from "./main/map/map.component";
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/auth/login", pathMatch: "full" }, // Redirect root to login
@@ -36,13 +36,13 @@ const appRoutes: Routes = [
   { path: "dashboards", component: DashboardComponent },
   { path: "attendances", component: AttendanceComponent },
   { path: "analytics", component: AnalyticsComponent },
+  { path: "maps", component: MapComponent },
   { path: "**", redirectTo: "/auth/login" }, // Redirect unknown routes to login
 ];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-  
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

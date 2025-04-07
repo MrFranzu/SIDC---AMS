@@ -3,25 +3,25 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { CoreCommonModule } from "@core/common.module";
-import { EventCheckComponent } from "./event-check.component";
-import { ZXingScannerModule } from "@zxing/ngx-scanner";
+import { MapComponent } from "./map.component";
+
+
 
 const routes: Routes = [
   {
     path: "",
-    component: EventCheckComponent,
+    component: MapComponent,
   },
 ];
 
 @NgModule({
-  declarations: [EventCheckComponent],
+  declarations: [MapComponent],
   imports: [
     RouterModule.forChild(routes),
-    ZXingScannerModule,
 
     TranslateModule,
     CoreCommonModule,
     CommonModule,
   ],
 })
-export class EventCheckModule {}
+export class MapModule {}

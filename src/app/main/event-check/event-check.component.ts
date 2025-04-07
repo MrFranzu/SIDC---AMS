@@ -168,6 +168,7 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
 
   /** Plays success/failure sound */
   private playSound(success: boolean): void {
+    //if gusto ng feedback pag nag iiscan?
     // const audio = new Audio(`assets/${success ? "right.mp3" : "wrong.mp3"}`);
     // audio.play().catch(error => console.log("Audio play error:", error));
   }

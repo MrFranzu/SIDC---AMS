@@ -1,0 +1,70 @@
+.map-dashboard {
+  display: flex;
+  flex-direction: row-reverse; /* Swap positions */
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px; /* Adds spacing between content and map */
+  flex-wrap: wrap; /* Makes it adaptive */
+}
+
+/* Popup Content (Right Side) */
+.popup-content {
+  flex: 1;
+  max-width: 40%;
+  min-width: 300px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Map (Left Side) */
+#philippines-map {
+  flex: 2;
+  height: 600px;
+  width: 70%;
+  min-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .map-dashboard {
+    flex-direction: column; /* Stack on smaller screens */
+    align-items: center;
+  }
+
+  #philippines-map,
+  .popup-content {
+    width: 100%;
+    max-width: 100%;
+  }
+  .map-popup {
+    font-family: "Arial", sans-serif;
+    color: #333;
+    h4 {
+      color: #007bff;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 14px;
+      margin: 3px 0;
+    }
+  }
+
+  .leaflet-popup-content-wrapper {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .leaflet-marker-icon {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .leaflet-marker-icon:hover {
+    transform: scale(1.2);
+  }
+}

@@ -4,7 +4,6 @@ import { saveAs } from "file-saver";
 import * as QRCode from "qrcode";
 import * as attendeeData from "../../common/json/attendee.json";
 
-
 interface Attendee {
   name: string;
   address: string;
@@ -60,6 +59,28 @@ export class AttendanceComponent {
         );
       })
       .sort(() => Math.random() - 0.5);
+  }
+  sendAllQRCodes() {
+    const recipients: string[] = [];
+
+    for (const attendee of this.attendanceList) {
+      if (attendee.email && attendee.qrCode) {
+        this.sendEmail(attendee.email, attendee.qrCode, attendee.name);
+        recipients.push(attendee.email);
+      }
+    }
+
+    if (recipients.length > 0) {
+      alert(`QR Codes have been sent to:\n\n${recipients.join("\n")}`);
+    } else {
+      alert("No attendees with valid emails and QR codes found.");
+    }
+  }
+
+  sendEmail(email: string, qrCode: string, name: string) {
+    console.log(`Sending QR Code to ${email}...`);
+    console.log(`QR Code for ${name}: ${qrCode}`);
+    // Here, integrate with an actual email API if needed
   }
 
   manualCheckIn(attendee: Attendee) {

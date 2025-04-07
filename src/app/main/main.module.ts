@@ -6,6 +6,7 @@ import { CoreCommonModule } from '@core/common.module';
 import { EventCheckComponent } from './event-check/event-check.component';
 
 
+
 const routes: Routes = [
   // {
   //   path: 'error',
@@ -40,6 +41,10 @@ const routes: Routes = [
     loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule),
   },
   {
+    path: 'maps',
+    loadChildren: () => import('./map/map.module').then(m => m.MapModule),
+  },
+  {
     path: 'eventcheck',
     loadChildren: () => import('./event-check/event-check.module').then(m => m.EventCheckModule),
   },
@@ -49,6 +54,8 @@ const routes: Routes = [
   declarations: [
   
 
+  
+  
   ],
   imports: [
     RouterModule.forChild(routes),

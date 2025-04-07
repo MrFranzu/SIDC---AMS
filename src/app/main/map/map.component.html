@@ -1,0 +1,18 @@
+<div class="map-dashboard">
+  <!-- Left Side: Popup Content -->
+  <div class="popup-content" *ngIf="selectedLocation">
+    <h2 style="color: #24695c;">{{ selectedLocation.name }}</h2>
+    <p><strong>Region:</strong> {{ selectedLocation.region }}</p>
+    <p>
+      <strong>Members:</strong> {{ selectedLocation.members.toLocaleString() }}
+    </p>
+    <p>--------------------------------------------------------------------</p>
+    <h4 style="color: #24695c;">Details</h4>
+    <p>
+      <strong>{{ selectedLocation.description.toLocaleString() }}</strong>
+    </p>
+  </div>
+
+  <!-- Right Side: Map -->
+  <div id="philippines-map"></div>
+</div>

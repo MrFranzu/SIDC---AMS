@@ -35,6 +35,14 @@ export const menu: CoreMenu[] = [
     role: ['Basic']
   },
   {
+    id: 'map',
+    title: 'Map',
+    type: 'item',
+    icon: 'map',
+    url: 'maps',
+    role: ['Basic']
+  },
+  {
     id: 'eventcheck',
     title: 'Check-in/out',
     type: 'item',

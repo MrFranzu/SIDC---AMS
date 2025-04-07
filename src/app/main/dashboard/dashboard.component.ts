@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
-import { Chart, ChartConfiguration } from "chart.js";
+import { Chart, ChartConfiguration, ChartOptions } from "chart.js";
 
 @Component({
   selector: "app-dashboard",
@@ -31,14 +31,7 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.calculateStatistics();
-    this.loadCharts();
-  }
-
-  private calculateStatistics(): void {
-    this.noShows = this.totalRegistered - this.totalCheckedIn;
-    this.attendanceRate = Math.round(
-      (this.totalCheckedIn / this.totalRegistered) * 100
-    );
+    this.loadCharts(); // ✅ Call the fixed method
   }
 
   private loadCharts(): void {
@@ -54,7 +47,23 @@ export class DashboardComponent implements AfterViewInit {
     canvas: HTMLCanvasElement,
     config: ChartConfiguration
   ): void {
-    new Chart(canvas, config);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Ensure high DPI scaling for sharpness
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.clientWidth * dpr;
+    canvas.height = canvas.clientHeight * dpr;
+    ctx.scale(dpr, dpr);
+
+    new Chart(ctx, config);
+  }
+
+  private calculateStatistics(): void {
+    this.noShows = this.totalRegistered - this.totalCheckedIn;
+    this.attendanceRate = Math.round(
+      (this.totalCheckedIn / this.totalRegistered) * 100
+    );
   }
 
   private getLineChartConfig(): ChartConfiguration {
@@ -79,6 +88,45 @@ export class DashboardComponent implements AfterViewInit {
           },
         ],
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 14,
+              },
+            },
+          },
+          tooltip: {
+            bodyFont: {
+              size: 14,
+            },
+            titleFont: {
+              size: 16,
+            },
+          },
+        },
+        scales: <ChartOptions["scales"]>{
+          x: {
+            type: "category",
+            ticks: {
+              font: {
+                size: 14,
+              },
+            },
+          },
+          y: {
+            type: "linear",
+            ticks: {
+              font: {
+                size: 14,
+              },
+            },
+          },
+        },
+      },
     };
   }
 
@@ -86,13 +134,21 @@ export class DashboardComponent implements AfterViewInit {
     return {
       type: "pie",
       data: {
-        labels: ["SIDC Members", "Non-SIDC Members"],
+        labels: ["Checked-in", "No-show"],
         datasets: [
           {
-            data: [320, 230],
-            backgroundColor: ["#24695C", "#1b5246"],
+            data: [this.totalCheckedIn, this.noShows],
+            backgroundColor: ["#24695C", "#B22222"],
           },
         ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top",
+          },
+        },
       },
     };
   }
@@ -101,14 +157,26 @@ export class DashboardComponent implements AfterViewInit {
     return {
       type: "bar",
       data: {
-        labels: ["Hall A", "Hall B", "Hall C"],
+        labels: ["9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM"],
         datasets: [
           {
             label: "Attendees",
-            data: [110, 120, 99],
-            backgroundColor: ["#24695C", "#1b5246", "#368675"],
+            data: [30, 90, 160, 280, 420, 465],
+            backgroundColor: "#24695C",
           },
         ],
+      },
+      options: {
+        responsive: true,
+        scales: <ChartOptions["scales"]>{
+          y: {
+            ticks: {
+              font: {
+                size: 14,
+              },
+            },
+          },
+        },
       },
     };
   }
