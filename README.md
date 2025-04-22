@@ -1,4 +1,4 @@
-# QR Event Attendance System BLUEPRINT
+# QR Event Attendance System 
 
 ---
 
@@ -23,6 +23,7 @@
 
 ---
 
+![image](https://github.com/user-attachments/assets/bac41eee-efde-48da-aa82-d4ed9ba7cc64)
 ### 2️⃣ Event Check-in Page (Kiosk/Scanner)
 📌 **Purpose:** Attendees scan their QR code upon arrival.  
 📌 **Process:**  
@@ -39,6 +40,7 @@
 
 ---
 
+![image](https://github.com/user-attachments/assets/4b26a655-6846-4ef3-9c86-55e99bf4dc74)
 ### 3️⃣ Event Check-out Page
 📌 **Purpose:** Record when an attendee leaves the event.  
 📌 **Process:**  
