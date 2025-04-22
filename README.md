@@ -1,8 +1,8 @@
-# QR Event Attendance System 
+# QR Attendance System 
 
 ---
 
-### 1️⃣ Registration Page (Before the Event)
+### 1️⃣ Registration (Before event)
 📌 **Purpose:** Allows attendees to register and receive a QR code.  
 📌 **Process:**  
 - Attendee fills out a registration form.  
@@ -24,7 +24,7 @@
 ---
 
 ![image](https://github.com/user-attachments/assets/bac41eee-efde-48da-aa82-d4ed9ba7cc64)
-### 2️⃣ Event Check-in Page (Kiosk/Scanner)
+### 2️⃣ Event Check-in Page 
 📌 **Purpose:** Attendees scan their QR code upon arrival.  
 📌 **Process:**  
 - Attendee scans QR code using a camera input.  
@@ -58,7 +58,7 @@
 
 ![image](https://github.com/user-attachments/assets/2b4df633-9cd3-4fd4-bc76-9d93bccd33f6)
 ![image](https://github.com/user-attachments/assets/6a042cd8-d04f-4030-880d-24edc7813ddc)
-### 4️⃣ Admin Dashboard (For SIDC Staff)
+### 4️⃣ Admin Dashboard 
 📌 **Purpose:** Manage and monitor event attendance.  
 
 📌 **UI Elements & Features:**  
@@ -83,7 +83,7 @@
 
 ![image](https://github.com/user-attachments/assets/80bdcb76-b32b-4ee5-bd0f-2d4930bdc38f)
 ![image](https://github.com/user-attachments/assets/4049be04-a6fd-4516-b5cd-836a3ed69889)
-## 📊 Descriptive Analytics (Admin Dashboard)
+## 📊 Descriptive Analytics 
 
 ### 1️⃣ Registration vs. Attendance Overview  
 ✅ **Total Registered Attendees** 📋  
@@ -134,8 +134,8 @@ Formula:
 
 ![image](https://github.com/user-attachments/assets/bcb55f4c-0783-46be-a165-7774e8e46356)
 ### 5️⃣ Export & Reporting Features  
-✅ **Download Attendance Reports** (CSV, Excel, PDF)  
-✅ **Export Filtered Data** (By date, location, membership type)  
+✅ **Download Attendance** (CSV, Excel, PDF)  
+✅ **Filtered Data** (By membership type and status)  
 
 ---
 
