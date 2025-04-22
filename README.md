@@ -2,8 +2,6 @@
 
 ---
 
-## Features
-
 ### 1️⃣ Registration Page (Before the Event)
 📌 **Purpose:** Allows attendees to register and receive a QR code.  
 📌 **Process:**  
@@ -18,6 +16,10 @@
 ✅ Email Address  
 ✅ Code Number (SIDC Member Code)  
 ✅ Submit Button (Generates QR Code & Stores Data)  
+
+---
+
+## Features
 
 ---
 
