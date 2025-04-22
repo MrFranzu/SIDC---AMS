@@ -56,6 +56,8 @@
 
 ---
 
+![image](https://github.com/user-attachments/assets/2b4df633-9cd3-4fd4-bc76-9d93bccd33f6)
+![image](https://github.com/user-attachments/assets/6a042cd8-d04f-4030-880d-24edc7813ddc)
 ### 4️⃣ Admin Dashboard (For SIDC Staff)
 📌 **Purpose:** Manage and monitor event attendance.  
 
@@ -78,6 +80,9 @@
 
 ---
 
+
+![image](https://github.com/user-attachments/assets/80bdcb76-b32b-4ee5-bd0f-2d4930bdc38f)
+![image](https://github.com/user-attachments/assets/4049be04-a6fd-4516-b5cd-836a3ed69889)
 ## 📊 Descriptive Analytics (Admin Dashboard)
 
 ### 1️⃣ Registration vs. Attendance Overview  
@@ -151,14 +156,5 @@ Formula:
 📌 **Attendance Table (Below Charts)**  
 ✅ **Search & Filter (By Name, Code, Date, Status)**  
 ✅ **Live Updating Attendance List**  
-
----
-
-## 🔔 Notification System  
-📌 **Purpose:** Keep attendees informed.  
-
-📌 **Notifications via:**  
-✅ **Email:** QR code sent after registration  
-✅ **SMS:** Check-in and Check-out confirmation  
 
 ---
