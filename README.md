@@ -132,6 +132,7 @@ Formula:
 
 ---
 
+![image](https://github.com/user-attachments/assets/bcb55f4c-0783-46be-a165-7774e8e46356)
 ### 5️⃣ Export & Reporting Features  
 ✅ **Download Attendance Reports** (CSV, Excel, PDF)  
 ✅ **Export Filtered Data** (By date, location, membership type)  
