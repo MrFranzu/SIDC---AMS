@@ -2,7 +2,7 @@
 
 ---
 
-![SIDC-AMS Flowchart](https://github.com/user-attachments/assets/67f228e0-4c5a-48fc-a925-93ac24f97c37)
+![SIDC-AMS Flowchart (1)](https://github.com/user-attachments/assets/f794de33-34ca-4cb8-be25-0726243ba3a9)
 
 ---
 
