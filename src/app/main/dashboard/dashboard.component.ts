@@ -1,5 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { Chart, ChartConfiguration, ChartOptions } from "chart.js";
+import * as attendeeData from "../../common/json/attendee.json";
+import { AttendanceService } from "app/common/services/attendance.service";
 
 @Component({
   selector: "app-dashboard",
@@ -7,11 +9,12 @@ import { Chart, ChartConfiguration, ChartOptions } from "chart.js";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements AfterViewInit {
-  readonly totalRegistered: number = 550;
-  readonly totalCheckedIn: number = 465;
+  totalRegistered!: number;
+  totalCheckedIn!: number;
   noShows!: number;
   attendanceRate!: number;
   currentAttendees: number = 390;
+  attendees = (attendeeData as any).default;
 
   attendanceLog = [
     { name: "Alice Johnson", time: "9:10 AM", status: "Checked-in" },
@@ -27,11 +30,33 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild("pieChart") pieChartRef!: ElementRef;
   @ViewChild("barChart") barChartRef!: ElementRef;
 
-  constructor() {}
+  constructor(private attendanceService: AttendanceService) {}
 
   ngAfterViewInit(): void {
-    this.calculateStatistics();
-    this.loadCharts(); // ✅ Call the fixed method
+    this.attendanceService.getAttendees$().subscribe((attendeesMap) => {
+      this.attendees = Object.values(attendeesMap);
+
+      this.attendanceLog = this.attendees.map((a: any) => ({
+        name: a.name,
+        time: this.formatTime(a.checkInTime),
+        checkOutTime: this.formatTime(a.checkOutTime),
+        status: a.checkInTime ? "Checked-in" : "No-show",
+
+      }));
+
+      this.calculateStatistics();
+      this.loadCharts();
+    });
+  }
+
+  private formatTime(time: string | null): string {
+    if (!time) return "";
+    return new Date(time).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
   }
 
   private loadCharts(): void {
@@ -60,6 +85,10 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   private calculateStatistics(): void {
+    this.totalRegistered = this.attendees.length;
+    this.totalCheckedIn = this.attendees.filter(
+      (a: any) => !!a.checkInTime
+    ).length;
     this.noShows = this.totalRegistered - this.totalCheckedIn;
     this.attendanceRate = Math.round(
       (this.totalCheckedIn / this.totalRegistered) * 100

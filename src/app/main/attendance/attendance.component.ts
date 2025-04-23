@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import * as QRCode from "qrcode";
 import * as attendeeData from "../../common/json/attendee.json";
+import { AttendanceService } from "app/common/services/attendance.service";
 
 interface Attendee {
   name: string;
@@ -33,9 +34,10 @@ export class AttendanceComponent {
   selectedQRCode: string | null = null;
   selectedAttendee: Attendee | null = null;
 
-  constructor(private cdr: ChangeDetectorRef) {
-    this.generateQRCodes();
-  }
+  
+constructor(private cdr: ChangeDetectorRef, private attendanceService: AttendanceService) {
+  this.generateQRCodes();
+}
 
   applyFilters() {
     this.filteredAttendance = this.attendanceList
@@ -80,16 +82,25 @@ export class AttendanceComponent {
   sendEmail(email: string, qrCode: string, name: string) {
     console.log(`Sending QR Code to ${email}...`);
     console.log(`QR Code for ${name}: ${qrCode}`);
-    // Here, integrate with an actual email API if needed
+    // integrate with an actual email API 
   }
 
   manualCheckIn(attendee: Attendee) {
-    attendee.checkInTime = new Date().toLocaleTimeString();
+    const now = new Date().toISOString();
+    this.attendanceService.updateAttendee(attendee.code.toUpperCase(), {
+      checkInTime: now,
+    });
+    attendee.checkInTime = now; 
   }
-
+  
   manualCheckOut(attendee: Attendee) {
-    attendee.checkOutTime = new Date().toLocaleTimeString();
+    const now = new Date().toISOString();
+    this.attendanceService.updateAttendee(attendee.code.toUpperCase(), {
+      checkOutTime: now,
+    });
+    attendee.checkOutTime = now; 
   }
+  
 
   resendQRCode(attendee: Attendee) {
     alert(`QR Code resent to ${attendee.email}`);

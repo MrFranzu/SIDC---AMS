@@ -5,6 +5,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { CoreCommonModule } from "@core/common.module";
 import { EventCheckComponent } from "./event-check.component";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
+import { FormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     ZXingScannerModule,
-
+    FormsModule,
     TranslateModule,
     CoreCommonModule,
     CommonModule,

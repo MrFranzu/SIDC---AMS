@@ -54,14 +54,12 @@
         aria-expanded="false"
       >
         <div class="user-nav d-sm-flex d-none">
-          <span class="user-name font-weight-bolder">{{currentUser?.fullName}}</span>
-          <span class="user-status" *ngIf="currentUser?.roles[0] === 'Basic'">
-            <span *ngIf="currentUser?.applicant?.memberType === 'regular' && !currentUser?.applicant?.member">Regular Member</span>
-            <span *ngIf="currentUser?.applicant?.memberType === 'associate' && !currentUser?.applicant?.member">Associate Member</span>
-            <span *ngIf="currentUser?.applicant?.memberType === 'regular' && currentUser?.applicant?.member">{{currentUser?.applicant?.member?.memberCode}} - Regular Member</span>
-            <span *ngIf="currentUser?.applicant?.memberType === 'associate' && currentUser?.applicant?.member">{{currentUser?.applicant?.member?.memberCode}} - Associate Member</span>
-          </span>
-          <span class="user-status" *ngIf="currentUser?.roles[0] !== 'Basic'">{{currentUser?.roles[0]}}</span>
+          <span class="user-name font-weight-bolder">Amiel Bagui</span>
+          <!-- <span class="user-status" style="margin-bottom: 5px;">
+            <span style="font-weight: bold; font-size: medium;"></span>
+           
+          </span> -->
+          <span class="user-status">Admin</span>
         </div>
         <span class="avatar"
           ><img

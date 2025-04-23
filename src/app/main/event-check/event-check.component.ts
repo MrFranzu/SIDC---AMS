@@ -7,7 +7,8 @@ import {
 } from "@angular/core";
 import { debounceTime } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
-import attendeeData from "../../common/json/attendee.json";
+import { AttendanceService } from "app/common/services/attendance.service";
+import { BarcodeFormat } from '@zxing/library';
 
 interface Attendee {
   code: string;
@@ -28,29 +29,49 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
   attendees: Record<string, Attendee> = {};
   isCheckInMode: boolean = true;
   scanSubject = new BehaviorSubject<string>("");
+  formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
+
+  attendanceLog: any[] = []; // Add appropriate type
+  // Add actual implementations for calculateStatistics and loadCharts
+  calculateStatistics() {}
+  loadCharts() {}
 
   @ViewChild("manualInput") manualInput!: ElementRef;
 
-  constructor() {}
+  constructor(private attendanceService: AttendanceService) {}
 
   ngOnInit(): void {
-    this.loadAttendees();
     this.initializeScanner();
   }
 
   ngAfterViewInit(): void {
-    this.focusManualInput();
+    this.attendanceService.getAttendees$().subscribe((attendeesMap) => {
+      this.attendees = attendeesMap;
+      const attendees = Object.values(attendeesMap);
+
+      this.attendanceLog = attendees.map((a) => ({
+        name: a.name,
+        time: a.checkInTime ?? null,
+        checkOutTime: a.checkOutTime ?? null,
+        status: a.checkInTime ? "Checked-in" : "No-show",
+      }));
+
+      this.calculateStatistics();
+      this.loadCharts();
+    });
   }
 
-  /** Loads attendee data from localStorage or JSON file */
+  /** Loads attendee data from service */
   private loadAttendees(): void {
-    const savedData = localStorage.getItem("attendees");
-    this.attendees = savedData
-      ? JSON.parse(savedData)
-      : this.convertAttendees(attendeeData);
+    const localData = localStorage.getItem("attendees");
+    if (localData) {
+      this.attendees = JSON.parse(localData);
+    } else {
+      this.attendees = this.attendanceService.getAttendeesSnapshot();
+    }
   }
 
-  /** Converts raw JSON attendee data to a key-value record */
+  /** Converts array to a key-value record */
   private convertAttendees(data: Attendee[]): Record<string, Attendee> {
     return data.reduce((acc, attendee) => {
       acc[attendee.code.toUpperCase()] = {
@@ -62,7 +83,7 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
     }, {} as Record<string, Attendee>);
   }
 
-  /** Initializes QR scanner with debounce to prevent duplicate scans */
+  /** Initializes QR scanner */
   private initializeScanner(): void {
     this.scanSubject.pipe(debounceTime(300)).subscribe((code) => {
       if (code) {
@@ -72,7 +93,7 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /** Toggles between Check-In and Check-Out modes */
+  /** Toggle Check-In/Out Mode */
   toggleMode(): void {
     this.isCheckInMode = !this.isCheckInMode;
     this.setMessage(
@@ -80,100 +101,102 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
         ? "✅ Switched to Check-In Mode"
         : "👋 Switched to Check-Out Mode"
     );
-
     this.focusManualInput();
   }
 
-  /** Handles QR scan input */
+  /** QR Scan Handler */
   onQrScan(result: string): void {
-    console.log("QR Scan Event Triggered:", result);
-    if (result && result !== this.scannedCode) {
-      console.log("QR Scan Detected:", result);
-      this.scanSubject.next(result.trim().toUpperCase());
-    } else {
-      console.warn("Duplicate or Empty Scan Ignored");
+    const code = result.trim().toUpperCase();
+    if (code) {
+      this.scanSubject.next(code);
     }
   }
 
-  /** Handles manual code entry */
+  /** Manual Entry Handler */
   manualCheck(): void {
     console.log("Manual Entry Detected:", this.manualCode);
     this.processCode(this.manualCode.trim().toUpperCase());
   }
 
-  /** Processes the scanned or manually entered code */
+  /** Main Code Processing */
   private processCode(code: string): void {
     this.scannedCode = code;
 
-    if (!this.attendees[code]) {
+    const attendee = this.attendees[code];
+    if (!attendee) {
       this.playSound(false);
       this.setMessage("❌ Invalid Code. Please try again.");
       return;
     }
 
-    const attendee = this.attendees[code];
-    console.log("Scanned Attendee Data:", attendee);
-
     const currentTime = this.getCurrentTime();
 
-    this.isCheckInMode
-      ? this.handleCheckIn(attendee, currentTime)
-      : this.handleCheckOut(attendee, currentTime);
+    if (this.isCheckInMode) {
+      this.handleCheckIn(attendee, currentTime);
+    } else {
+      this.handleCheckOut(attendee, currentTime);
+    }
 
-    this.saveDataToLocalStorage();
+    this.attendanceService.updateAttendee(code, attendee);
+    this.updateAttendanceLog(); // ✅ Add this
+
     this.resetInputs();
   }
 
-  /** Handles check-in process */
+  /** Check-In Logic */
   private handleCheckIn(attendee: Attendee, time: string): void {
     if (!attendee.checkInTime) {
       attendee.checkInTime = time;
       this.playSound(true);
       this.setMessage(`✅ Welcome ${attendee.name}! Checked in at ${time}.`);
     } else {
+      const formatted = new Date(attendee.checkInTime).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
       this.setMessage(
-        `⚠️ ${attendee.name} already checked in at ${attendee.checkInTime}.`
+        `⚠️ ${attendee.name} already checked in at ${formatted}.`
       );
     }
   }
 
-  /** Handles check-out process */
+  /** Check-Out Logic */
   private handleCheckOut(attendee: Attendee, time: string): void {
     if (!attendee.checkInTime) {
-      this.setMessage(
-        `⚠️ ${attendee.name} has not checked in yet. Please check-in first.`
-      );
+      this.setMessage(`⚠️ ${attendee.name} has not checked in yet.`);
     } else if (!attendee.checkOutTime) {
       attendee.checkOutTime = time;
       this.playSound(true);
       this.setMessage(`👋 Goodbye ${attendee.name}! Checked out at ${time}.`);
     } else {
+      const formatted = new Date(attendee.checkInTime).toLocaleString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+
       this.setMessage(
-        `⚠️ ${attendee.name} already checked out at ${attendee.checkOutTime}.`
+        `⚠️ ${attendee.name} already checked out at ${formatted}.`
       );
     }
   }
 
-  /** Sets message with a timeout */
+  /** Display message briefly */
   private setMessage(msg: string): void {
     this.message = msg;
     console.log("Message:", msg);
     setTimeout(() => (this.message = ""), 2000);
   }
 
-  /** Saves updated attendee data to localStorage */
-  private saveDataToLocalStorage(): void {
-    localStorage.setItem("attendees", JSON.stringify(this.attendees));
-  }
-
-  /** Plays success/failure sound */
+  /** Play sound feedback */
   private playSound(success: boolean): void {
-    //if gusto ng feedback pag nag iiscan?
+    // Uncomment if needed
     // const audio = new Audio(`assets/${success ? "right.mp3" : "wrong.mp3"}`);
-    // audio.play().catch(error => console.log("Audio play error:", error));
+    // audio.play().catch(err => console.log("Audio play error:", err));
   }
 
-  /** Clears input fields and refocuses manual input */
+  /** Reset form */
   private resetInputs(): void {
     setTimeout(() => {
       this.scannedCode = "";
@@ -182,22 +205,39 @@ export class EventCheckComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  /** Focuses manual input field */
+  /** Focus manual input */
   private focusManualInput(): void {
     setTimeout(() => {
-      if (this.manualInput) {
-        this.manualInput.nativeElement.focus();
-      } else {
-        console.warn("Manual input field is not available.");
-      }
+      this.manualInput?.nativeElement?.focus();
     }, 200);
   }
 
-  /** Returns current formatted time */
+  /** Get current time */
   private getCurrentTime(): string {
-    return new Date().toLocaleTimeString([], {
+    return new Date().toISOString();
+  }
+  private formatTime(time: string | null): string {
+    if (!time) return "";
+    return new Date(time).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: true,
+    });
+  }
+
+  private updateAttendanceLog(): void {
+    const attendees = Object.values(this.attendees);
+    this.attendanceLog = attendees.map((a) => {
+      let status = "No-show";
+      if (a.checkInTime && !a.checkOutTime) status = "Checked-in";
+      else if (a.checkInTime && a.checkOutTime) status = "Checked-out";
+
+      return {
+        name: a.name,
+        time: this.formatTime(a.checkInTime),
+        checkOutTime: this.formatTime(a.checkOutTime),
+        status,
+      };
     });
   }
 }

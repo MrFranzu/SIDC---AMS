@@ -1,7 +1,15 @@
 <div class="container">
   <!-- Left Section: QR Scanner -->
   <div class="left-section">
-    <zxing-scanner [formats]="['QR_CODE']" (scanSuccess)="onQrScan($event)" [autostart]="true"></zxing-scanner>
+    <zxing-scanner
+    [formats]="formatsEnabled"
+    (scanSuccess)="onQrScan($event)"
+    [autostart]="true"
+    [torch]="true"
+    [tryHarder]="true"
+    aria-label="QR Code Scanner">
+  </zxing-scanner>
+  
   </div>
 
   <!-- Right Section: Inputs & Messages -->
@@ -9,10 +17,11 @@
     <h2>Event Check-In/Check-Out</h2>
 
     <!-- Toggle Mode Button -->
-    <button (click)="toggleMode()" class="toggle-button">
+    <button (click)="toggleMode()" class="toggle-button" aria-label="Toggle Check-In/Check-Out Mode">
       {{ isCheckInMode ? "Switch to Check-Out" : "Switch to Check-In" }}
     </button>
 
+    <!-- Mode Indicator -->
     <p class="mode-indicator">
       Current Mode:
       <strong [ngClass]="{ 'check-in': isCheckInMode, 'check-out': !isCheckInMode }">
@@ -22,18 +31,28 @@
 
     <!-- Manual Entry -->
     <div class="manual-entry">
-      <input type="text" [(ngModel)]="manualCode" placeholder="Enter Code Manually" (keyup.enter)="manualCheck()"
-        aria-label="Manual Code Entry" />
-      <button (click)="manualCheck()" [disabled]="!manualCode.trim()">
+      <input
+        #manualInput
+        type="text"
+        [(ngModel)]="manualCode"
+        placeholder="Enter Code Manually"
+        (keyup.enter)="manualCheck()"
+        aria-label="Manual Code Entry"
+      />
+      <button
+        (click)="manualCheck()"
+        [disabled]="!manualCode.trim()"
+        aria-label="Submit Manual Code">
         Submit
       </button>
     </div>
 
     <!-- Display Message -->
     <p class="message" [ngClass]="{
-        error: message.includes('❌'),
-        success: message.includes('✅')
-      }">
+      error: message.includes('❌'),
+      warning: message.includes('⚠️'),
+      success: message.includes('✅')
+    }">
       {{ message }}
     </p>
   </div>
