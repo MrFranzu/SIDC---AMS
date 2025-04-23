@@ -2,6 +2,10 @@
 
 ---
 
+![SIDC-AMS Flowchart](https://github.com/user-attachments/assets/d4481d90-bb3f-440e-9c2b-945de15d197a)
+
+---
+
 ### 1️⃣ Registration (Before event)
 📌 **Purpose:** Allows attendees to register and receive a QR code.  
 📌 **Process:**  
